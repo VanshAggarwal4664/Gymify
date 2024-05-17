@@ -1,0 +1,48 @@
+.feature-section{
+ display: flex;
+ flex-direction: column;
+ position: relative;
+
+}
+.feature-content{
+    display: flex;
+    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    gap: 40px;
+    padding: 0px 40px 40px 40px;
+}
+
+.feature{
+    padding: 40px;
+    width: 100%;
+    height:100%;
+    border-radius: 40px;
+    background-color: #0e2039;
+    box-shadow: rgba(13, 13, 13, 0.463) 0px 3px 8px;
+}
+.feature-heading{
+  margin-left: 60px;
+  margin-top: 60px;
+}
+
+.icon{
+    fill: #0e2039;
+}
+
+.mirror-text{
+    z-index: 2;
+}
+
+.mirror-text::before{
+    content: attr(data-content);
+    font-size: 140px;
+    position: absolute;
+    right: 0px;
+    top: 20px;
+   color: #01070f;
+   z-index: 1;
+    opacity: 0.1;
+    /* transform: rotate(90deg); */
+} 
