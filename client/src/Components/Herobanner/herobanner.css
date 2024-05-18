@@ -3,13 +3,15 @@
     justify-content: center;
     align-items: center;
     max-width: 1960px;
-    max-height: 400px; /* Adjust the max-height as needed */
+    height: max-content;
+    max-height:max-content; /* Adjust the max-height as needed */
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 20px;
+   
 }
 
 .left-hero{
-    margin-top: 80px;
+    margin-top: 40px;
     flex: 1; /* Both divs take equal width */
     display: flex;
     justify-content: center;
@@ -51,15 +53,22 @@
 }
 
 .right-hero{
-    margin-top: 80px;
-    flex: 1; /* Both divs take equal width */
-    display: flex;
-    justify-content: center;
-    align-items: left;
-    flex-direction: column;
-    text-align: left;
-    position: relative;
+    margin-top: 40px;
+    background-image: url('../../assets/hero_banner.png');
+    /* background-color: antiquewhite; */
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 650px;
+    width: 50%;
     overflow: hidden;
+    /* flex: 1; Both divs take equal width */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: left; */
+    /* flex-direction: column; */
+    /* text-align: left; */
+    /* position: relative; */
+    /* overflow: hidden; */
 }
 
 .slide-from-right{

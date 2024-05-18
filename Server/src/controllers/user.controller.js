@@ -33,7 +33,7 @@ const registerUser = asyncHandler( async(req , res) =>{
         const {email,username ,password}=req.body;
 
   //images ka data manage karenge humne multer use kiya h to wo kuch or method add kar deta h "req" ma
-          
+          console.log("yaha output",req.files)
      const logoLocalPath = req.files?.logo[0]?.path  // multer ne hamare server pe upload kar diya h or uska path send kar raha h
 
      if(!logoLocalPath){
@@ -67,7 +67,9 @@ const registerUser = asyncHandler( async(req , res) =>{
     })
   
     if(ExistedUser){
-        throw new ApiError(409, "username or email already exist")
+      const error = new ApiError(409, "username or email already exist")
+        const errorjson= error.toJson()
+        res.status(409).json(errorjson)
     }
 
 
@@ -115,12 +117,16 @@ const loginUser = asyncHandler( async(req,res)=>{
   // yaha jo user call kiya h humne database se usme refreshtoken khali h kyuki refresh token ki value baad ma add hui h
   const user = await User.findOne({username})
   if(!user){
-    throw new ApiError(404, " User not Found")
+    const error= new ApiError(404, " User not Found")
+    const errorjson= error.toJson();
+    res.status(404).json(errorjson)
   }
   const isPasswordValid = await user.isPasswordCorrect(password)
 
   if(!isPasswordValid){
-    throw new ApiError(400, "Password is incorrect")
+    const error=  new ApiError(400, "Password is incorrect")
+    const errorjson= error.toJson();
+    res.status(400).json(errorjson)
   }
 
   const {accessToken,refreshToken} = await genrateRefreshandAccessToken(user._id);

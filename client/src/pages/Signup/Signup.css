@@ -17,7 +17,7 @@
     flex-direction: column;
     color: black;
     gap: 20px;
-    height: 400px;
+    height: max-content;
     width: 400px;
     background-color: #01070f;
     box-shadow:#0066ffb7 0px 8px 16px;

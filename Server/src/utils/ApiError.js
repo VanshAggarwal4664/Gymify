@@ -4,7 +4,8 @@ class ApiError extends Error {
         message= "Something went wrong",
         errors = [],
         stack = ""
-    ){
+    )
+    {
         super(message)
         this.statusCode = statusCode
         this.data = null
@@ -17,8 +18,17 @@ class ApiError extends Error {
         // } else{
         //     Error.captureStackTrace(this, this.constructor)
         // }
-
+           
     }
+
+    toJson() {
+        return {
+            statusCode: this.statusCode,
+            message: this.message,
+            success: this.success,
+            errors: this.errors
+        };
+   }
 }
 
 export {ApiError}

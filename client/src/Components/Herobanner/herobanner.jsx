@@ -17,7 +17,8 @@ const Hero=()=>{
                 <button>Join the Community</button>  
             </div>
             <div className="right-hero">
-               <img className={`slide-from-right ${Showimage?'show':''}`} src="src\assets\hero_banner.png" alt="" />
+          
+               {/* <img className={`slide-from-right ${Showimage?'show':''}`} src="src\assets\hero_banner.png" alt="" /> */}
             </div>
         </section>
     )
