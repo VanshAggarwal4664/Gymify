@@ -147,7 +147,7 @@ const loginUser = asyncHandler( async(req,res)=>{
 //cookie front end se bhi modify kar sakte h but humne yeh option de diya to ab server side se hi update hogi
   const options={
     httpOnly : true,
-    secure : true
+    // secure : true,
    }
   //  cookie("accessToken",accessToken,options) first is key second is value and last is option which we define earlier 
    return res.status(200)
@@ -155,7 +155,10 @@ const loginUser = asyncHandler( async(req,res)=>{
    .cookie("refreshToken",refreshToken,options)
    .json(
     new ApiResponse(200,{user:LoggedInUser, accessToken,refreshToken},"User Logged In successfully")
-   )
+   ).on('finish', () => {
+    console.log('Cookies Set:', res.getHeaders()['set-cookie']);
+  })
+   
 
 })
 

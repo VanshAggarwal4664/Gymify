@@ -49,7 +49,7 @@ const Signup = () => {
         setSuccessMessage(outcome.data.message)
         setTimeout(() => {
           navigate('/signin')// Redirect to login page
-        }, 3000)
+        }, 2000)
        
       } catch (error) {
       

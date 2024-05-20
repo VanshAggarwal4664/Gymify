@@ -17,9 +17,8 @@ export const VerifyJWT=asyncHandler( async(req, _,next)=>{
         
 // yaha hum pehle cookie se token le rahe h user ka or agar phone se aa raha hoga to wo custom header ma aata h
        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","");
-     
        if(!token){
-        throw new ApiError(401,"Unauthorized Request")
+        throw new ApiError(401," cooki nahi h Unauthorized Request")
        }
       
        // ab jwt se decode karvayenge token

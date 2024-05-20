@@ -1,0 +1,47 @@
+.register-member{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin: 0px 80px;
+    padding-left: 60px;
+}
+.member-heading{
+    padding: 20px;
+}
+
+.member-form{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 14px;
+    height: 90%;
+    width: 600px;
+    background-color: #01070f;
+    box-shadow:#0066ffb7 0px 4px  4px;
+    padding: 20px 20px;
+    border: 8px solid white;
+    border-radius: 8px;
+}
+.avail-button{
+    width: 200px;
+    height:60px;
+    border-radius: 8px;
+    padding:8px;
+    margin: 10px 2px;
+    /* border: 2px solid #0066ffb7; */
+    color: white;
+    background-color: #0066ffb7;
+    font-size: 18px;
+  }
+  
+  .cancel-button{
+    width: 200px;
+    height:60px;
+    border-radius: 8px;
+    padding:8px;
+    margin: 10px 2px;
+    /* border: 2px solid #0066ffb7; */
+    color: black;
+    background-color: white;
+    font-size: 18px;
+  }  

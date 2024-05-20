@@ -23,38 +23,38 @@ const Dashboard = () => {
               <ul className='menu-items'>
                 
                 <li> 
-                <NavLink to="dashboard" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
+                <NavLink style={{textDecoration:"none"}} to="dashboard" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/> Dashboard 
                 </NavLink> 
                 </li>
                 <li> 
-                <NavLink to="profile" className= {({isActive})=>{return `menu-item ${isActive? "active ":""}` }}>
+                <NavLink  style={{textDecoration:"none"}}to="profile" className= {({isActive})=>{return `menu-item ${isActive? "active ":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/> Admin Profile
                 </NavLink> 
                 </li>
                 <li> 
-                <NavLink to="register" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
+                <NavLink  style={{textDecoration:"none"}}to="register" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/>  Registration
                 </NavLink> 
                 </li>
                 <li> 
-                <NavLink to="plan" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
+                <NavLink style={{textDecoration:"none"}} to="plan" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/> Plan
                 </NavLink> 
                 
                 </li>
                 <li>
-                 <NavLink to="payment" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
+                 <NavLink style={{textDecoration:"none"}} to="payment" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/>Payment
                  </NavLink>
                  </li>
                 <li> 
-                <NavLink to="view-members" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
+                <NavLink style={{textDecoration:"none"}} to="view-members" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/> View Members
                  </NavLink>
                 </li>
                 <li> 
-                <NavLink to="message" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
+                <NavLink style={{textDecoration:"none"}} to="message" className= {({isActive})=>{return `menu-item ${isActive?"active":""}` }}>
                 <ArrowRightIcon boxSize={14} paddingRight={4}/> Personalized Message
                  </NavLink>
                 </li>

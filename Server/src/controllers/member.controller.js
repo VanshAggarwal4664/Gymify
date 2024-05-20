@@ -15,14 +15,31 @@ const registerMember = asyncHandler( async(req,res)=>{
     if([fullName, email,mobileNumber].some((field)=>{
         return field?.trim() === ""
     })){
-        throw new ApiError(400,"all fields are required")
+       const error= new ApiError(400,"all fields are required")
+       const jsonError=error.toJson();
+       res.status(400).json(jsonError);
     }
 
     if(!ValidEmail(email)){
-        throw new ApiError(400,"email format is incorrect")
+        const error= new ApiError(400,"email format is incorrect")
+        const jsonError=error.toJson();
+        res.status(400).json(jsonError);
     }
     if(!ValidNumber(mobileNumber)){
-        throw new ApiError(400,"number format is incorrect")
+        const error= new ApiError(400,"number format is incorrect")
+        const jsonError=error.toJson();
+        res.status(400).json(jsonError)
+    }
+    // yeh bhi check karenge ki agar same member wapis register na ho raha ho
+
+    const ExistedMember= await Member.findOne({
+        $and:[{fullName},{email},{mobileNumber}]
+    })
+
+    if(!ExistedMember){
+        const error= new ApiError(409,"Member already Exist")
+        const jsonError= error.toJson();
+        res.status(409).json(jsonError);
     }
 
     // image alag se sambhale ge and check nahi karenge kyuki yeh required field nahi h
@@ -50,7 +67,7 @@ const registerMember = asyncHandler( async(req,res)=>{
      }
     //then user ko return kar denge value
 
-    return res.status(200).json(new ApiResponse(200,{},"Member Created Successfully"))
+    return res.status(200).json(new ApiResponse(200,{memberId: MemberCreated._id},"Member Created Successfully"))
 })
 
 export {registerMember}

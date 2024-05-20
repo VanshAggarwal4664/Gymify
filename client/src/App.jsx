@@ -5,6 +5,7 @@ import Signin from './pages/SignIn/SignIn'
 import { BrowserRouter , Routes, Route, Router } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard'
 import Feature from './Components/Features/features';
+import Register from './pages/Register/Register';
 
 const App=()=>{
   return(
@@ -19,6 +20,8 @@ const App=()=>{
 
        <Route path="/admin-panel" element={<Dashboard/>}>
         <Route path='dashboard' element={<Feature/>}></Route>
+        <Route path='register' element={<Register/>}></Route>
+        <Route path='plan' element={<Register/>}></Route>
        </Route>
 
      </Routes>
