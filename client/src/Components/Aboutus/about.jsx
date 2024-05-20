@@ -3,7 +3,7 @@ const About=()=>{
     return(
         <div className="about-section">
             <div className="about-image">
-                <div className="image1"> </div>
+                <div className="image1"></div>
                 <div className="image2 "></div>
                 <div className="image3 "></div>
             </div>

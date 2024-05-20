@@ -1,4 +1,8 @@
 import { Card, CardHeader, CardBody, CardFooter, Heading, Text} from '@chakra-ui/react'
+import checklist from '../../assets/check-list-clipboard-list-svgrepo-com.svg'
+import expense from '../../assets/business-expense-svgrepo-com.svg'
+import message from '../../assets/message-text-svgrepo-com.svg'
+import analytics from '../../assets/analytics-svgrepo-com.svg'
 
 import './features.css'
 const Feature=()=>{
@@ -11,7 +15,7 @@ const Feature=()=>{
         <div className='feature-content'>
            <Card minH={240} className='feature'>
             <CardHeader>
-                <img className='icon' src="src\assets\check-list-clipboard-list-svgrepo-com.svg" width="60px" height="60px" alt="" />
+                <img className='icon' src={checklist} width="60px" height="60px" alt="" />
             </CardHeader>
             <CardBody>
                 <Heading fontSize={30} pt={4} pb={4}>Effortless Attendance</Heading>
@@ -21,7 +25,7 @@ const Feature=()=>{
 
            <Card minH={240} className='feature'>
             <CardHeader>
-                <img src="src\assets\business-expense-svgrepo-com.svg" width="60px" height="60px" alt="" />
+                <img src={expense} width="60px" height="60px" alt="" />
             </CardHeader>
             <CardBody>
                 <Heading fontSize={30} pt={4} pb={4}>Expense Management</Heading>
@@ -31,7 +35,7 @@ const Feature=()=>{
 
            <Card minH={220} className='feature'>
             <CardHeader>
-                <img src="src\assets\message-text-svgrepo-com.svg" width="60px" height="60px" alt="" />
+                <img src={message} width="60px" height="60px" alt="" />
             </CardHeader>
             <CardBody>
                 <Heading fontSize={30} pt={4} pb={4}>Personalized Messaging</Heading>
@@ -41,7 +45,7 @@ const Feature=()=>{
 
            <Card minH={240} className='feature'>
             <CardHeader>
-                <img src="src\assets\analytics-svgrepo-com.svg" width="60px" height="60px" alt="" />
+                <img src={analytics} width="60px" height="60px" alt="" />
             </CardHeader>
             <CardBody>
                 <Heading fontSize={31} pt={4} pb={4}>Insightful Reporting</Heading>
