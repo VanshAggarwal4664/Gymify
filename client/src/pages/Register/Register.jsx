@@ -47,8 +47,7 @@ const Register = () => {
                 headers:{
                     'Content-Type':'multipart/form-data'
                   },
-                withCredentials: true,
-                
+                withCredentials:true
              })
              setShow(true)
              setMessage(response.data.message)
@@ -58,7 +57,7 @@ const Register = () => {
         } catch (error) {
             setShow(true)
             setMessage(error.response.data.message)
-            console.log(error)
+            console.log("yaha se aa raha h",error)
         }
       }
 

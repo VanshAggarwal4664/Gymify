@@ -42,7 +42,7 @@ const userSchema= new mongoose.Schema(
            next();
       } )
 
-      // yaha hum password and encrypt password ko check kar rahe h
+      // yaha hum password and encrypt password ko check kar rahe h or sabse main baat yaha hum khud ke methods bana rahe user model ma jisko kahi bhi access kar payenge
       userSchema.methods.isPasswordCorrect= async function(password){
         return bcrypt.compare(password,this.password)
       }

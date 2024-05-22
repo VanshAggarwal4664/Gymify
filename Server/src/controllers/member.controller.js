@@ -17,18 +17,18 @@ const registerMember = asyncHandler( async(req,res)=>{
     })){
        const error= new ApiError(400,"all fields are required")
        const jsonError=error.toJson();
-       res.status(400).json(jsonError);
+       return res.status(400).json(jsonError);
     }
 
     if(!ValidEmail(email)){
         const error= new ApiError(400,"email format is incorrect")
         const jsonError=error.toJson();
-        res.status(400).json(jsonError);
+        return res.status(400).json(jsonError);
     }
     if(!ValidNumber(mobileNumber)){
         const error= new ApiError(400,"number format is incorrect")
         const jsonError=error.toJson();
-        res.status(400).json(jsonError)
+       return res.status(400).json(jsonError)
     }
     // yeh bhi check karenge ki agar same member wapis register na ho raha ho
 
@@ -36,10 +36,10 @@ const registerMember = asyncHandler( async(req,res)=>{
         $and:[{fullName},{email},{mobileNumber}]
     })
 
-    if(!ExistedMember){
+    if(ExistedMember){
         const error= new ApiError(409,"Member already Exist")
         const jsonError= error.toJson();
-        res.status(409).json(jsonError);
+       return  res.status(409).json(jsonError);
     }
 
     // image alag se sambhale ge and check nahi karenge kyuki yeh required field nahi h

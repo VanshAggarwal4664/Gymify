@@ -1,19 +1,18 @@
-.register-member{
+.member-subscription{
     display: flex;
     width: 100%;
     flex-direction: column;
     align-content: center;
     margin: 10px 80px;
     padding-left: 60px;
- 
 }
-.member-heading{
+.subscription-heading{
     padding: 20px;
 }
 
-.member-form{
+.subscription-form{
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
     color: white;
     gap: 14px;
     height: 90%;
@@ -23,6 +22,14 @@
     padding: 20px 20px;
     border: 8px solid white;
     border-radius: 8px;
+}
+
+.subscription-form select{
+    padding: 15px 5px;
+    border-radius: 8px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
 }
 .avail-button{
     width: 200px;
@@ -34,16 +41,4 @@
     color: white;
     background-color: #0066ffb7;
     font-size: 18px;
-  }
-  
-  .cancel-button{
-    width: 200px;
-    height:60px;
-    border-radius: 8px;
-    padding:8px;
-    margin: 10px 2px;
-    /* border: 2px solid #0066ffb7; */
-    color: black;
-    background-color: white;
-    font-size: 18px;
-  }  
+}

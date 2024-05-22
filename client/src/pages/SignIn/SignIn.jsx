@@ -31,9 +31,9 @@ const SignIn = () => {
        console.log("login successful",response.data);
        setShow(true)
        setMessage(response.data.message)
-      //  setTimeout(() => {
-      //   navigate('/admin-panel') // redirect to admin page
-      // }, 3000);
+       setTimeout(() => {
+        navigate('/admin-panel') // redirect to admin page
+      }, 2000);
        
 
     } catch (error) {

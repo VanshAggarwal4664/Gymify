@@ -17,6 +17,7 @@ app.use(cookieParser());
 ///import routes
 import userRouter from './routes/user.routes.js';
 import memberRouter from './routes/registerMember.route.js'
+import planRouter from './routes/subscription.routes.js'
 
 // routes declaration 
 
@@ -25,5 +26,8 @@ app.use("/api/v1/users", userRouter)
 
 //yaha gym ke members ko sambhala ja raha h
 app.use("/api/v1/members",memberRouter);
+
+//yaha members ki subscription sambhali ja rahi h
+app.use("/api/v1/plan",planRouter);
 
 export {app};
