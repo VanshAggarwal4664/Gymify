@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Feature from './Components/Features/features';
 import Register from './pages/Register/Register';
 import Subscription from './pages/Subscription/Subscription';
+import ViewMember from './pages/ViewMember/ViewMember';
 
 const App=()=>{
   return(
@@ -23,6 +24,7 @@ const App=()=>{
         <Route path='dashboard' element={<Feature/>}></Route>
         <Route path='register' element={<Register/>}></Route>
         <Route path='plan' element={<Subscription/>}></Route>
+        <Route path='view-members' element={<ViewMember/>}></Route>
        </Route>
 
      </Routes>

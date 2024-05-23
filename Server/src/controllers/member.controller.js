@@ -5,6 +5,7 @@ import {ValidEmail} from '../utils/ValidEmail.js'
 import Member from '../models/member.model.js'
 import {uploadonCloudinary} from '../utils/cloudinary.js'
 import {ValidNumber} from '../utils/ValidNumber.js'
+import Subscription from '../models/subscription.model.js'
 
 
 const registerMember = asyncHandler( async(req,res)=>{
@@ -70,4 +71,17 @@ const registerMember = asyncHandler( async(req,res)=>{
     return res.status(200).json(new ApiResponse(200,{memberId: MemberCreated._id},"Member Created Successfully"))
 })
 
-export {registerMember}
+const viewMember= asyncHandler(async(req,res)=>{
+     const ownerId = req.jwtuser._id;
+     const MemberList = await Subscription.find({ownerId}).populate('memberId');
+
+     if(!MemberList.length){
+        const error= new ApiError(500,"issue occur while fetching data from database")
+        const jsonError=error.toJson()
+        return res.status(500).json(jsonError)
+     }
+     res.status(200).json(new ApiResponse(200,MemberList,"Member list data fetched successfully"))
+
+})
+
+export {registerMember, viewMember}

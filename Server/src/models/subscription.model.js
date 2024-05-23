@@ -7,6 +7,12 @@ const subscriptionSchema= new mongoose.Schema({
         ref:"Member",
         required:true
     },
+    
+    ownerId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true
+      },
 
     startDate:{
         type: Date,

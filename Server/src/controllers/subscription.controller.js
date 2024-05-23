@@ -40,8 +40,11 @@ const memberSubscription = asyncHandler(async(req,res)=>{
     // ab data backend ma daalna h 
     console.log("yaha aa gya hu ma 2")
     console.log(startDate,Durationmonths,price,memberId);
+    const ownerId = req.jwtuser._id
+    
     const subscription= await Subscription.create({
         memberId,
+        ownerId,
         startDate,
         Durationmonths,
         price,

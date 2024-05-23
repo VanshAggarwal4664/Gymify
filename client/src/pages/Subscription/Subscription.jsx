@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Subscription = () => {
   const location = useLocation()
-  const { memberId } = location.state
+  const { memberId } = location.state || {memberId:"0000000"}
   const [show, setShow] = useState(false)
   const [message, setMessage] = useState("")
 
@@ -54,7 +54,7 @@ const Subscription = () => {
     }
     setForm({
       ...form,
-      Durationmonths: parseduration,
+      Durationmonths: duration,
       price: price
     })
   }
