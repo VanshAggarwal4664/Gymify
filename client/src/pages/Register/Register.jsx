@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './Register.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { ChakraProvider, Spinner } from '@chakra-ui/react'
+
 
 
 const Register = () => {
@@ -63,6 +65,7 @@ const Register = () => {
 
   return (
     <>
+    <ChakraProvider>
         <div className='register-member'>
             <div className='member-heading'>
                 <h1>Become a Member!</h1>
@@ -95,7 +98,7 @@ const Register = () => {
                     required
                     />
                     <label>Member Photo</label>
-                    <input style={{color:"black"}}
+                    <input style={{color:"black" }}
                     type="file"
                     name='photo'
                     onChange={handleEvent}
@@ -105,11 +108,12 @@ const Register = () => {
                       <button onClick={handleSubmit} className='avail-button'>Avail Membership</button>
                       <button onClick={handleCancel} className='cancel-button'>Cancel</button>
                     </div>
-                   {show?<p style={{color:"white"}}>{message}</p>:""}
+                   {show?<p style={{color:"white"}}>{message?message:<Spinner colorScheme='white'/>}</p>:""}
                 </form>
                 
             </div>
         </div>
+        </ChakraProvider>
     </>
   )
 }

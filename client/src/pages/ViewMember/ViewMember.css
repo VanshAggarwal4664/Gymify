@@ -14,18 +14,21 @@
     color: black;
 }
 
-.member-content{
-    display: flex;
-    justify-content: space-evenly;
-    padding: 40px;
-    color: white;
+.search-bar input{
+    height: max-content;
+    padding: 5px 4px
 }
 
-.member-card{
+.member-content{
     display: flex;
-      box-shadow:white 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-      width:30%; 
-      background-color:"#01070f"; 
-      border-radius: 40px;
-      padding: 10px 20px;
+    flex-wrap: wrap;
+    gap:40px;
+    padding: 40px;
+    color: white;
+    width:100%;
+    height: max-content;
+}
+.member-content .member-card{
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row with space for gaps */
+  box-sizing: border-box;
 }

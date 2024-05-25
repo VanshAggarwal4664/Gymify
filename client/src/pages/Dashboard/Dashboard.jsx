@@ -1,23 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './dashboard.css'
 import { Card, CardHeader, CardBody, Heading,Text,Image } from '@chakra-ui/react'
 
 import {ArrowRightIcon} from '@chakra-ui/icons'
 import { NavLink, Outlet } from 'react-router-dom'
+import axios from 'axios'
 
 const Dashboard = () => {
+
+  const [isVerified,setIsVerified]= useState(false);
+  const[message,setMessage]=useState("")
+  const [data,setData]= useState({})
+
+  useEffect(() => {
+   const getUser= async()=>{
+       try {
+        const response=  await axios.get("http://localhost:2000/api/v1/users/getuser",{
+         withCredentials:true
+        })
+        // const data = response.then((await response).data)
+        // const jsonresponse= response.json()
+        console.log(response.data.data)
+        setIsVerified(true)
+        setData(response.data.data)
+       } catch (error) {
+          //  console.log(error.response.data.message)
+         setMessage(error.response.data.message)
+          console.log(error)
+       }
+   }
+  getUser();
+    
+  }, [])
+  
   return (
     <>
-
-       <div className='dashboard'>
+    {isVerified?(<div className='dashboard'>
           <div className='dashboard-menu'>
-              <Card align="center" textAlign="center" padding={4}>
+              <Card align="center" textAlign="center" padding={8}>
                 <CardHeader borderRadius="10">
-                    <Image src="src\assets\image-removebg-preview (7) (1).png" alt="" boxSize="60px" borderRadius="full" />
+                    <Image src={data.logo} alt="" boxSize="60px" borderRadius="full" />
                 </CardHeader>
                 <CardBody>
-                <Heading fontSize={30}>Username</Heading>
-                <Text fontSize={24}>email@gmail.com</Text>
+                <Heading fontSize={26} color="white">{(data.username).toUpperCase()}</Heading>
+                <Text fontSize={19} color="white">{data.email}</Text>
                 </CardBody>
               </Card>
               <ul className='menu-items'>
@@ -62,9 +88,15 @@ const Dashboard = () => {
               </ul>
           </div>
           <div className='dashboard-component'>
-            <Outlet/>
+            <Outlet 
+              username="vansh"
+              email={data?.email}
+              logo={data?.logo}
+            />
           </div>
-       </div>    
+       </div>):<p style={{color:"black", fontSize:"40px"}}>{message}
+       </p>}
+           
     </>
   )
 }

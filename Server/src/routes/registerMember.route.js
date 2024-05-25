@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import { VerifyJWT } from "../middlewares/auth.middleware.js";
-import { registerMember, viewMember } from "../controllers/member.controller.js";
+import { deleteMember, registerMember, viewMember } from "../controllers/member.controller.js";
 
 
 
@@ -20,5 +20,6 @@ router.route("/register").post(
 ),VerifyJWT,registerMember)
 
 router.route("/view-members").get(VerifyJWT,viewMember)
+router.route('/:id').delete(deleteMember)
 
 export default router;

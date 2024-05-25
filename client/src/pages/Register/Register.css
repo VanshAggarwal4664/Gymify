@@ -9,6 +9,8 @@
 }
 .member-heading{
     padding: 20px;
+    color: white;
+    font-size: 25px;
 }
 
 .member-form{
@@ -16,13 +18,17 @@
     flex-direction: column;
     color: white;
     gap: 14px;
-    height: 90%;
+    height: 100%;
     width: 600px;
     background-color: #01070f;
     box-shadow:#0066ffb7 0px 4px  4px;
     padding: 20px 20px;
     border: 8px solid white;
     border-radius: 8px;
+}
+.member-form input{
+    color: black;
+    height: max-content;
 }
 .avail-button{
     width: 200px;

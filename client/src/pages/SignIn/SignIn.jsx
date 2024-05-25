@@ -32,7 +32,7 @@ const SignIn = () => {
        setShow(true)
        setMessage(response.data.message)
        setTimeout(() => {
-        navigate('/admin-panel') // redirect to admin page
+        navigate('/admin-panel',{state:response.data.data}) // redirect to admin page
       }, 2000);
        
 

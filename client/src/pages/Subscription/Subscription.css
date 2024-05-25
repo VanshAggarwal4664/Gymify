@@ -23,7 +23,9 @@
     border: 8px solid white;
     border-radius: 8px;
 }
-
+.subscription-form input{
+    height: max-content;
+}
 .subscription-form select{
     padding: 15px 5px;
     border-radius: 8px;

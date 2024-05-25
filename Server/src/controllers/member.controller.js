@@ -84,4 +84,20 @@ const viewMember= asyncHandler(async(req,res)=>{
 
 })
 
-export {registerMember, viewMember}
+const deleteMember= asyncHandler(async(req,res)=>{
+   const {id}= req.params;
+   console.log(id)
+    const member = await Member.findByIdAndDelete(id)
+   //  console.log(member)
+    if(!member){
+      const error =  new ApiError(400,"Member not found")
+      const jsonError=error.toJson()
+      return res.status(400).json(jsonError)
+    }
+
+    res.status(200).json(new ApiResponse(200,{},"Member Deleted Successfully"))
+
+
+})
+
+export {registerMember, viewMember,deleteMember}

@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import './Subscription.css'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { Spinner } from '@chakra-ui/react'
+
+
 
 
 const Subscription = () => {
@@ -114,7 +117,7 @@ const Subscription = () => {
             <label>Plan amount</label>
             <input type="number" value={form.price} readOnly />
             <button onClick={handleSubmit} className='avail-button'>Avail Membership</button>
-            {show?<p style={{color:"white"}}>{message}</p>:""}
+            {show?<p style={{color:"white"}}>{message?message:<Spinner colorScheme='white'/>}</p>:""}
           </form>
         </div>
       </div>

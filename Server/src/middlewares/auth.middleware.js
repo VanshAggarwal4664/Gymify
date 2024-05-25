@@ -11,14 +11,16 @@ import User from '../models/user.model.js';
 
 
 // yaha res ka use nahi ho raha to hum uski jagah" _" use kar sakte h
-export const VerifyJWT=asyncHandler( async(req, _,next)=>{
+export const VerifyJWT = asyncHandler( async(req, res,next)=>{
     try { 
         
         
 // yaha hum pehle cookie se token le rahe h user ka or agar phone se aa raha hoga to wo custom header ma aata h
        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","");
        if(!token){
-        throw new ApiError(401," cooki nahi h Unauthorized Request")
+          const error= new ApiError(404,"Unauthorized Request Please Login")
+          const jsonerror= error.toJson();
+          return res.status(404).json(jsonerror);
        }
       
        // ab jwt se decode karvayenge token
@@ -37,6 +39,8 @@ export const VerifyJWT=asyncHandler( async(req, _,next)=>{
        next()
 
     } catch (error) {
-        throw new ApiError("400",error?.message || "invalid access token")
+        const ferror= new ApiError(404,"Unauthorized Request Please Login")
+        const jsonerror= ferror.toJson();
+        return res.status(404).json(jsonerror);
     }
 })
