@@ -10,6 +10,7 @@ const Register = () => {
       const navigate= useNavigate()
       const [message,setMessage]=useState('');
       const [show,setShow]=useState(false)
+      const [loader,setLoader]=useState(false)
       
     const [form, setForm]= useState({
         fullname:"",
@@ -36,6 +37,7 @@ const Register = () => {
       }
 
       const handleSubmit= async(event)=>{
+        setLoader(true)
         try {
              event.preventDefault()
     
@@ -51,10 +53,17 @@ const Register = () => {
                   },
                 withCredentials:true
              })
+             setLoader(false)
              setShow(true)
              setMessage(response.data.message)
-             navigate('/admin-panel/plan',{state:response.data.data})
-
+             setTimeout(() => {
+              navigate('/admin-panel/plan',{
+                state:{
+                  Id: response?.data?.data?.memberId,
+                  isEdit:false
+                }
+              })
+             }, 2000);
              console.log("member register successfully:", response.data.data.memberId)
         } catch (error) {
             setShow(true)
@@ -105,10 +114,11 @@ const Register = () => {
                     required
                     />
                     <div>
-                      <button onClick={handleSubmit} className='avail-button'>Avail Membership</button>
+                      <button onClick={handleSubmit} className='avail-button'>Avail Membership{ loader?<Spinner boxSize="18px"/>:""}</button>
                       <button onClick={handleCancel} className='cancel-button'>Cancel</button>
+                     
                     </div>
-                   {show?<p style={{color:"white"}}>{message?message:<Spinner colorScheme='white'/>}</p>:""}
+                   {show?<p style={{color:"white"}}>{message}</p>:""}
                 </form>
                 
             </div>

@@ -20,6 +20,6 @@ router.route("/register").post(
 ),VerifyJWT,registerMember)
 
 router.route("/view-members").get(VerifyJWT,viewMember)
-router.route('/:id').delete(deleteMember)
+router.route('/:id/:photoid').delete(deleteMember)
 
 export default router;

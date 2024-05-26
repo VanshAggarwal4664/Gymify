@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
 import './Subscription.css'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Spinner } from '@chakra-ui/react'
 
 
 
 
+
 const Subscription = () => {
+  const navigate=useNavigate();
   const location = useLocation()
-  const { memberId } = location.state || {memberId:"0000000"}
+  // yaha do jagoh se redirect aa raha h 
+  //1. pehla register se member id and is edit false kyuki new subscription h to hume save karni h to hume member id chahiye hmare model ke hisab se
+  //2. dusra view member se subscription id and edit true kyuki hume subscription  ko update karni h member already register h 
+  const { Id,isEdit } = location.state || {Id:"0000000" ,isEdit:false}
+  console.log(Id)
   const [show, setShow] = useState(false)
   const [message, setMessage] = useState("")
+  const[loader,setLoader]=useState(false)
 
   const [form, setForm] = useState({
-    memberId: memberId,
+    Id: Id, // yeh kabhi member id jaise act karega or kabhi subscription id jaise work karega
     startDate: '',
     Durationmonths:1,
     price: 700
@@ -63,26 +70,56 @@ const Subscription = () => {
   }
 
    const handleSubmit = async (event) => {
-      try {
+    setLoader(true);
+      
         event.preventDefault()
-        console.log(form.Durationmonths,"1")
-        const endDate = calculateEndDate(form.startDate,form.Durationmonths)
-        const formDataToSend= {...form,endDate:endDate}
-        const response = await axios.post("http://localhost:2000/api/v1/plan/subscription", formDataToSend, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          },
-          withCredentials: true
-        })
-        setShow(true)
-        setMessage(response.data.message)
-        console.log(response.data.message, "active")
-      } catch (error) {
-        setShow(true)
-        setMessage(error.response.data.message);
-        console.log(error)
-
-      }
+        // console.log(form.Durationmonths,"1")
+        if(!isEdit){
+          const endDate = calculateEndDate(form.startDate,form.Durationmonths)
+          const formDataToSend= {...form,memberId:form.Id  ,endDate:endDate}
+           await axios.post("http://localhost:2000/api/v1/plan/subscription", formDataToSend, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            },
+            withCredentials: true
+          }).then((response)=>{
+            setMessage(response.data.message)
+            setLoader(false)
+            setShow(true)
+            setTimeout(() => {
+            navigate('admin-panel/view-members')
+            }, 2000);
+          }).catch((error)=>{
+            setShow(true)
+            setMessage(error.response.data.message);
+            console.log(error)
+          })
+        
+        }
+        else
+        {
+          const endDate = calculateEndDate(form.startDate,form.Durationmonths)
+          const formDataToSend= {...form,subscriptionId:form.Id ,endDate:endDate}
+           await axios.put("http://localhost:2000/api/v1/plan/subscription-update", formDataToSend, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            },
+            withCredentials: true
+          }).then((response)=>{
+            setMessage(response.data.message)
+            setLoader(false)
+            setShow(true)
+            setTimeout(() => {
+            navigate('admin-panel/view-members')
+            }, 2000);
+          }).catch((error)=>{
+            setShow(true)
+          setMessage(error.response.data.message);
+          console.log(error)
+          })
+          
+         
+        }
     }
 
   
@@ -90,14 +127,15 @@ const Subscription = () => {
     <>
       <div className='member-subscription'>
         <div className='subscription-heading'>
-          <h1>Add Subscription</h1>
+          <h1>{!isEdit?"Add Subscription": "Update Subscription"}</h1>
         </div>
         <div>
           <form className='subscription-form'>
-            <label>Member Id</label>
+            <label>{!isEdit?"Member Id":"Subscription Id"}</label>
             <input
+            style={{color:"black"}}
               type="text"
-              value={form.memberId}
+              value={form.Id}
               readOnly />
             <label>Start Date</label>
             <input
@@ -116,8 +154,11 @@ const Subscription = () => {
             </select>
             <label>Plan amount</label>
             <input type="number" value={form.price} readOnly />
-            <button onClick={handleSubmit} className='avail-button'>Avail Membership</button>
-            {show?<p style={{color:"white"}}>{message?message:<Spinner colorScheme='white'/>}</p>:""}
+            <button onClick={handleSubmit} className='avail-button'>
+            {!isEdit?"Avail Membership":"Update Membership"}
+            {loader?<Spinner boxSize="16px" padding="0px 1px"/>:""}
+            </button>
+            {show?<p style={{color:"white"}}>{message}</p>:""}
           </form>
         </div>
       </div>

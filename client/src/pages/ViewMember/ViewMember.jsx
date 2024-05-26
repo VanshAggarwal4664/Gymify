@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './ViewMember.css'
 import { Card, CardHeader, CardBody, Heading, Text, Image, Switch, FormLabel, CardFooter, Avatar, AvatarBadge, Spinner, Flex, Button } from '@chakra-ui/react'
-import { SearchIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons'
+import { SearchIcon, CloseIcon, DeleteIcon,EditIcon } from '@chakra-ui/icons'
 import { ChakraProvider } from '@chakra-ui/react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 const ViewMember = () => {
+    const navigate=useNavigate()
     const [memberData, setMemberData] = useState()
     const [original, setOriginal] = useState()
     const [searchData, setSearchData] = useState("");
@@ -46,6 +48,7 @@ const ViewMember = () => {
     const handleSort = (event) => {
         const sortType = event.target.value;
         let sortedData = [...original];  // Create a shallow copy of the original data
+        console.log(sortedData)
         // console.log("Original data before sorting:", original);  // Log original data
     
         switch (sortType) {
@@ -89,19 +92,24 @@ const ViewMember = () => {
         setMemberData(filterMember)
     }
 
-    const handleDelete=async(Id)=>{
-       const response = await axios.delete(`http://localhost:2000/api/v1/members/${Id}`,{
+    const handleDelete=async(Id,photoUrl)=>{
+        const photoId= photoUrl.split('/').pop().split('.')[0]
+       const response = await axios.delete(`http://localhost:2000/api/v1/members/${Id}/${photoId}`,{
         withCredentials:true
        })
-
-       console.log(response.data.status)
-       if(response.status=400){
+       if(response.status === 200){
         setMemberData((prevMembers)=>{
-           return prevMembers.filter((prevMember)=>{
-                return prevMember?.memberId !== Id
+           return prevMembers.filter((Member)=>{
+                return Member?._id !== Id
             })
         })
        }
+    }
+
+    const handleEdit=(SubscriptionId)=>{
+      navigate("/admin-panel/plan",{
+        state:{Id:SubscriptionId, isEdit:true}
+      })
     }
 
 
@@ -191,7 +199,8 @@ const ViewMember = () => {
                                         display="flex"
                                         justifyContent="right"
                                         >
-                                         <Button onClick={() => handleDelete(Member?._id)} _hover={{  bg: "#004bbb",boxSize:"38px" }}  boxSize="40px"><DeleteIcon  color="black" boxSize="25px"/></Button>
+                                         <Button margin="2px"onClick={() => handleDelete(Member?._id,Member?.memberId?.photo)} _hover={{  bg: "#004bbb",boxSize:"38px" }}  boxSize="40px"><DeleteIcon  color="black" boxSize="25px"/></Button>
+                                         <Button margin="2px" onClick={() => handleEdit(Member?._id)} _hover={{  bg: "#004bbb",boxSize:"38px" }}  boxSize="40px"><EditIcon  color="black" boxSize="25px"/></Button>
                                         </CardFooter>
 
                                     </Card>

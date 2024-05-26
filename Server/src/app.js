@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 ///import routes
 import userRouter from './routes/user.routes.js';
-import memberRouter from './routes/registerMember.route.js'
+import memberRouter from './routes/member.route.js'
 import planRouter from './routes/subscription.routes.js'
 // routes declaration 
 
