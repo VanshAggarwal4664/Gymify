@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ViewMember.css'
 import { Card, CardHeader, CardBody, Heading, Text, Image, Switch, FormLabel, CardFooter, Avatar, AvatarBadge, Spinner, Flex, Button } from '@chakra-ui/react'
-import { SearchIcon, CloseIcon, DeleteIcon,EditIcon } from '@chakra-ui/icons'
+import { SearchIcon, CloseIcon, DeleteIcon,EditIcon,EmailIcon } from '@chakra-ui/icons'
 import { ChakraProvider } from '@chakra-ui/react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -13,12 +13,16 @@ const ViewMember = () => {
     const [original, setOriginal] = useState()
     const [searchData, setSearchData] = useState("");
     const [searchActive, setSearchActive] = useState(true)
+    const [message,setMessage]=useState("");
+    const [loader,setLoader]= useState(false)
+    const[show,setShow]= useState(false)
+    const [reminderIndex,setReminderIndex]=useState();
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:2000/api/v1/memberslist/view-members", {
+                const response = await axios.get("http://localhost:2000/api/v1/members/view-members", {
                     withCredentials: true
                 })
                 setMemberData(response?.data?.data)
@@ -107,11 +111,32 @@ const ViewMember = () => {
     }
 
     const handleEdit=(SubscriptionId)=>{
+        // console.log(value)
       navigate("/admin-panel/plan",{
         state:{Id:SubscriptionId, isEdit:true}
       })
     }
 
+    const handleReminder=async(Id,index)=>{
+        setLoader(true)
+         try {
+             const response = await axios.get(`http://localhost:2000/api/v1/plan/subscription-reminder/${Id}`,{
+               withCredentials:true
+             })
+            console.log(response.data);
+            setMessage(response.data.message)
+            setShow(true)
+            setReminderIndex(index)
+            setLoader(false)
+         } catch (error) {
+            console.log(error)
+            setShow(true)
+            setReminderIndex(index)
+            setLoader(false)
+            setMessage(error.response.message)            
+         }
+
+    }
 
     return (
         <>
@@ -148,7 +173,7 @@ const ViewMember = () => {
                     </div>
                     <div className='member-content'>
                         {memberData?.length > 0 ? (
-                            memberData.map((Member) => {
+                            memberData.map((Member,index) => {
                                 const today = new Date()
                                 const endDate = new Date(Member?.endDate)
                                 const isActive = today.getTime() < endDate.getTime()
@@ -188,16 +213,30 @@ const ViewMember = () => {
                                             <Text padding="3px">Mobile-Number:{Member?.memberId?.mobileNumber}</Text>
                                         </CardHeader>
 
-                                        <CardBody display="flex" flexDirection="column" justifyContent="left" justifyItems="left">
+                                        {isActive?
+                                        <CardBody display="flex" flexDirection="column" alignItems="center">
                                             <Heading fontSize="22px">Subscription Details</Heading>
                                             <Text padding="3px"><span style={{ fontWeight: "bold" }}>Joining Date: </span>{new Date(Member?.startDate).toLocaleDateString() || 'N/A'}</Text>
                                             <Text padding="3px"><span style={{ fontWeight: "bold" }}>Ending Date: </span>  {new Date(Member?.endDate).toLocaleDateString() || 'N/A'}</Text>
                                             <Text padding="3px"><span style={{ fontWeight: "bold" }}>Duration: </span>{Member?.Durationmonths} months</Text>
+                                        </CardBody>:
+                                        <CardBody display="flex" flexDirection="column" alignItems="center">
+                                            <Heading fontSize="22px">Member Subscription Ended</Heading>
+                                            <Text textAlign="center">Here it is a button to send the Email about the Subscription  </Text><br></br>
+                                            <Button onClick={(()=>handleReminder(Member?._id,index))} width="180px"> 
+                                            <EmailIcon color="#01070f" width="30px" padding="0px 1px"/>
+                                             Send Email
+                                             {loader && index===reminderIndex?<Spinner/>:""}
+                                            </Button>
+                                            {show && index===reminderIndex?<p style={{color:"white"}}>{message}</p>:null}
+                                             
                                         </CardBody>
+                                        }
 
                                         <CardFooter
                                         display="flex"
-                                        justifyContent="right"
+                                        alignItems="center"
+                                        justifyContent="center"
                                         >
                                          <Button margin="2px"onClick={() => handleDelete(Member?._id,Member?.memberId?.photo)} _hover={{  bg: "#004bbb",boxSize:"38px" }}  boxSize="40px"><DeleteIcon  color="black" boxSize="25px"/></Button>
                                          <Button margin="2px" onClick={() => handleEdit(Member?._id)} _hover={{  bg: "#004bbb",boxSize:"38px" }}  boxSize="40px"><EditIcon  color="black" boxSize="25px"/></Button>

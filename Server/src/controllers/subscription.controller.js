@@ -2,6 +2,8 @@ import Subscription from "../models/subscription.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { RegisterContent, ReminderContent } from "../utils/genrateEmailContent.js";
+import sendEmail from "../utils/nodemailer.js";
 
 
 const memberSubscription = asyncHandler(async (req, res) => {
@@ -51,8 +53,8 @@ const memberSubscription = asyncHandler(async (req, res) => {
         endDate
     })
 
-    const subscriptionCreated = await Subscription.findById(subscription._id)
-    console.log("yaha aa gya hu ma 22")
+    const subscriptionCreated = await Subscription.findById(subscription._id).populate('memberId')
+    // console.log("yaha aa gya hu ma 22")
 
     if (!subscriptionCreated) {
         const error = new ApiError(500, "error occured while storing the subsciption data")
@@ -60,7 +62,29 @@ const memberSubscription = asyncHandler(async (req, res) => {
         return res.status(500).json(jsonError)
     }
 
-    return res.status(200).json(new ApiResponse(200, {}, "Now the member subsciption is active"))
+    // ab hume mail send karni h to hume subscription or member data dono chahiye jo hume mil chuka h populate() method ki wajah se
+      
+       // pehle email content hona chahiye
+       const emailContent= RegisterContent(subscriptionCreated)
+
+       // ab hume mail options chahiye
+       const mailOptions={
+        from:process.env.user,
+        to: subscriptionCreated?.memberId?.email,
+        subject:"Subscription Confirmation",
+        html: emailContent
+       }
+    // ab email send karna h
+    try {
+        console.log("yaah aa gya hu ma 22")
+        await sendEmail(mailOptions);
+        return res.status(200).json(new ApiResponse(200, {}, " Member subsciption is active and Confirmation mail is sent"))
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message:"Subscription Created but failed to send confirmation mail"})
+
+    }
+
 
 })
 
@@ -99,5 +123,32 @@ const subscriptionUpdate = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, {}, "Subscription Details Update Successfully"))
 })
 
+const subscriptionReminder= asyncHandler(async(req,res)=>{
+const {id} = req.params
 
-export { memberSubscription, subscriptionUpdate }
+ // ab hume mail send karni h to hume subscription or member data dono chahiye
+const subscriptionMemberData= await Subscription.findById(id).populate("memberId")
+
+// ab hume mail content chahiye
+const emailContent= ReminderContent(subscriptionMemberData)
+
+// email options chahiye hume
+const mailOptions={
+    from:process.env.user,
+    to: subscriptionMemberData?.memberId?.email,
+    subject:"Subscription End",
+    html: emailContent
+   }
+
+//    ab send karni h email
+try {
+    await sendEmail(mailOptions)
+    return res.status(200).json(new ApiResponse(200, {}, "Reminder Email is Sent Successfully"))
+} catch (error) {
+    console.log(error)
+    return res.status(500).json({message:"Reminder Email is not sent"})
+}
+})
+
+
+export { memberSubscription, subscriptionUpdate,subscriptionReminder }

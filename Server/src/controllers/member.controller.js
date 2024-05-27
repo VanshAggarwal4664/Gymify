@@ -66,6 +66,8 @@ const registerMember = asyncHandler( async(req,res)=>{
      if(!MemberCreated){
         throw new ApiError(500,"Error Occur while registring the Member")
      }
+
+     
     //then user ko return kar denge value
 
     return res.status(200).json(new ApiResponse(200,{memberId: MemberCreated._id},"Member Created Successfully"))

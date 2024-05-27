@@ -29,8 +29,4 @@ app.use("/api/v1/members",memberRouter);
 //yaha members ki subscription sambhali ja rahi h
 app.use("/api/v1/plan",planRouter);
 
-// yaha member ko view karna h saare
-
-app.use("/api/v1/memberslist",  memberRouter);
-
 export {app};

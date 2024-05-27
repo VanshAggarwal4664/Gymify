@@ -19,7 +19,11 @@ router.route("/register").post(
    
 ),VerifyJWT,registerMember)
 
+
+// yaha member ko view karna h saarr
 router.route("/view-members").get(VerifyJWT,viewMember)
+
+// yaha member ka data and subscription ke data ko delete kar rahe h
 router.route('/:id/:photoid').delete(deleteMember)
 
 export default router;

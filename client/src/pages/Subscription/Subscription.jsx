@@ -87,10 +87,11 @@ const Subscription = () => {
             setLoader(false)
             setShow(true)
             setTimeout(() => {
-            navigate('admin-panel/view-members')
+            navigate('/admin-panel/view-members')
             }, 2000);
           }).catch((error)=>{
             setShow(true)
+            setLoader(false)
             setMessage(error.response.data.message);
             console.log(error)
           })
@@ -110,10 +111,11 @@ const Subscription = () => {
             setLoader(false)
             setShow(true)
             setTimeout(() => {
-            navigate('admin-panel/view-members')
+            navigate('/admin-panel/view-members')
             }, 2000);
           }).catch((error)=>{
             setShow(true)
+            setLoader(false)
           setMessage(error.response.data.message);
           console.log(error)
           })
@@ -122,7 +124,6 @@ const Subscription = () => {
         }
     }
 
-  
   return (
     <>
       <div className='member-subscription'>
